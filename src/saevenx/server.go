@@ -7,19 +7,19 @@ import (
 )
 
 type Server struct {
-	connectionList []Connection
+	connectionList []*Connection
 	ticker         *time.Ticker
 }
 
 func CreateServer() *Server {
 	server := &Server{}
-	server.connectionList = make([]Connection, 0)
+	server.connectionList = make([]*Connection, 0)
 	return server
 }
 
 func (server *Server) AddConnection(connection net.Conn) *Connection {
-	newConnection := Connection{conn: connection, timeConnected: time.Now()}
-	server.connectionList = append(server.connectionList, newConnection)
+	newConnection := Connection{conn: connection, timeConnected: time.Now(), server: server}
+	server.connectionList = append(server.connectionList, &newConnection)
 	go newConnection.listen()
 	fmt.Println("New connection (%d)", server.ConnectionCount())
 	return &newConnection
@@ -29,7 +29,7 @@ func (server *Server) onClientConnectionClosed(connection *Connection, err error
 	// delete the connection
 	fmt.Println( "There are this many items in the list", server.ConnectionCount())
 	for i, conn := range server.connectionList {
-		if &conn == connection {
+		if conn == connection {
 			fmt.Println( "Found dead connection at position ", i )
 			server.connectionList[i] = server.connectionList[len(server.connectionList)-1]
 			server.connectionList = server.connectionList[:len(server.connectionList)-1]
