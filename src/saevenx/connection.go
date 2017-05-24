@@ -29,6 +29,7 @@ func (connection *Connection) listen() {
 			return
 		}
 		connection.server.onMessageReceived(connection, message)
+
 	}
 }
 
