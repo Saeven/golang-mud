@@ -19,9 +19,9 @@ var commandKeys []string
 /**
  * Sort all command keys into a reusable lookup
  */
-func prepareCommands()  {
-	for k, _ := range commandList{
-		commandKeys = append(commandKeys,k)
+func prepareCommands() {
+	for k, _ := range commandList {
+		commandKeys = append(commandKeys, k)
 	}
 	sort.Strings(commandKeys)
 }
@@ -29,10 +29,10 @@ func prepareCommands()  {
 /**
  * Given some user input, return the related command
  */
-func getCommand(userInput string) (*Command, error){
+func getCommand(userInput string) (*Command, error) {
 
-	for _, k := range commandKeys{
-		if strings.HasPrefix(k, userInput){
+	for _, k := range commandKeys {
+		if strings.HasPrefix(k, userInput) {
 			return commandList[k], nil
 		}
 
@@ -40,7 +40,6 @@ func getCommand(userInput string) (*Command, error){
 
 	return nil, errors.New("I'm not sure what you mean.  Try again?")
 }
-
 
 /**
  * Without further ado, the command list
@@ -52,9 +51,8 @@ var commandList = map[string]*Command{
 	 */
 	"look": {
 		closure: func(player *Player, arguments []string) {
-
+			player.connection.Write("You looked!")
 		},
 		executionTimeInSeconds: 0,
 	},
 }
-

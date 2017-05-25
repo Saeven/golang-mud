@@ -130,13 +130,13 @@ func (server *Server) ConnectionCount() int {
 func (server *Server) onMessageReceived(connection *Connection, message string) {
 
 	words := strings.Fields(message)
+	input, arguments := words[0], words[1:]
 
-	command, error := getCommand(words[0])
-	if error {
-		connection.Write(string(error))
+	command, error := getCommand(input)
+	if error != nil {
+		connection.Write(fmt.Sprint(error))
 		return
 	}
 
-	//command.closure( connection.Player, )
-
+	command.closure( connection.Player, arguments )
 }
