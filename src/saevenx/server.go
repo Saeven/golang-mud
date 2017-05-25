@@ -10,20 +10,31 @@ import (
 
 type Server struct {
 	connectionList []*Connection
+	playerList     []*Connection
 	ticker         *time.Ticker
-	Motd		string
+	Motd           string
+	Menu           string
 }
 
 func CreateServer() *Server {
-	server := &Server{}
-	server.connectionList = make([]*Connection, 0)
+	server := &Server{
+		connectionList: make([]*Connection, 0),
+		playerList:     make([]*Connection, 0),
+	}
+
 	pwd, _ := os.Getwd()
 
-	fmt.Println(pwd)
+	fmt.Printf("[CONFIG] Current working directory set to %s\n", pwd)
 
+	// 1. Pull in the welcome screen
 	fmt.Println("[CONFIG] Pulling MOTD")
-	bytes, _ := ioutil.ReadFile(pwd + "/resources/MOTD")
-	server.Motd = string(bytes)
+	motdBytes, _ := ioutil.ReadFile(pwd + "/resources/MOTD")
+	server.Motd = string(motdBytes)
+
+	// 2. Pull in the menu
+	fmt.Println("[CONFIG] Pulling Menu")
+	menuBytes, _ := ioutil.ReadFile(pwd + "/resources/Menu")
+	server.Menu = string(menuBytes)
 
 	return server
 }
@@ -48,8 +59,44 @@ func (server *Server) onClientConnectionClosed(connection *Connection, err error
 		}
 	}
 
-	fmt.Printf( "[DISC] There are %d connected users.\n", server.ConnectionCount())
+	fmt.Printf("[DISC] There are %d connected users.\n", server.ConnectionCount())
+}
 
+func (server *Server) authenticatePlayer(username string, password string) (bool, *Player) {
+
+	if !userExists(username) {
+		return false, nil
+	}
+
+	player := authenticate(username, password)
+
+	if player != nil {
+		return true, player
+	}
+
+	return true, nil
+}
+
+/**
+ * Check the database to see if the player exists
+ */
+func userExists(username string) bool {
+	return username == "Saeven"
+}
+
+func authenticate(username string, password string) *Player {
+	if username == "Saeven" && password == "123" {
+		return &Player{Name: username}
+	}
+	return nil
+}
+
+func (server *Server) onPlayerAuthenticated(connection *Connection) {
+	fmt.Printf("[AUTH] Player authenticated (%s)\n", connection.Player.Name)
+
+	connection.state = STATE_LOGIN_MENU
+	connection.Write("Welcome. Death Awaits.\n")
+	connection.sendMenu()
 }
 
 /**
@@ -61,7 +108,7 @@ func (server *Server) Start() {
 	go func() {
 		for range server.ticker.C {
 			for _, c := range server.connectionList {
-				fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state )
+				fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
 			}
 		}
 	}()
