@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 type Server struct {
@@ -35,6 +36,10 @@ func CreateServer() *Server {
 	fmt.Println("[CONFIG] Pulling Menu")
 	menuBytes, _ := ioutil.ReadFile(pwd + "/resources/Menu")
 	server.Menu = string(menuBytes)
+
+	// 3. Prepare the command hashes
+	fmt.Println("[CONFIG] Preparing commands")
+	prepareCommands()
 
 	return server
 }
@@ -123,5 +128,15 @@ func (server *Server) ConnectionCount() int {
  * A message has been received on a given connection descriptor
  */
 func (server *Server) onMessageReceived(connection *Connection, message string) {
-	connection.Write("I received this string :" + message)
+
+	words := strings.Fields(message)
+
+	command, error := getCommand(words[0])
+	if error {
+		connection.Write(string(error))
+		return
+	}
+
+	//command.closure( connection.Player, )
+
 }

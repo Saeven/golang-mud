@@ -7,13 +7,21 @@ import (
 	"strings"
 )
 
+
+
+/**
+ * Various user states, recorded in the connection struct
+ */
 const STATE_WELCOME = 0
 const STATE_LOGIN_USERNAME = 1
 const STATE_LOGIN_PASSWORD = 2
 const STATE_LOGIN_MENU = 3
-
 const STATE_CHARACTER_CREATION = 4
 
+
+/**
+ * Connection-related constants
+ */
 const MAX_PASSWORD_FAILURES = 3
 
 type Connection struct {
@@ -69,10 +77,14 @@ func (connection *Connection) listen() {
 			exists, player := connection.server.authenticatePlayer(connection.username, message);
 
 			if exists {
-				if player != nil { // auth succeeded
+				if player != nil {
+					// auth succeeded, do a bit of housekeeping
 					connection.Player = player
+					player.setConnection(connection)
+
 					connection.server.onPlayerAuthenticated(connection)
-				} else { // auth fails
+				} else {
+					// auth fails, try again
 					connection.Write("Sorry, that wasn't right. Try again: ")
 
 					connection.passwordFailures++
