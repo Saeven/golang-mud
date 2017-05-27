@@ -1,6 +1,6 @@
 package saevenx
 
 type Race struct {
-	Name string
+	Name    string
 	Faction string
 }

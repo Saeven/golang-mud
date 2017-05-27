@@ -51,8 +51,10 @@ var commandList = map[string]*Command{
 	 */
 	"look": {
 		closure: func(player *Player, arguments []string) {
-			player.connection.Write("You looked!")
+			ServerInstance.getRoom(player.CurrentRoom).showTo(player)
+			player.connection.Write("\n")
 		},
 		executionTimeInSeconds: 0,
 	},
+
 }

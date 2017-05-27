@@ -7,8 +7,6 @@ import (
 	"saevenx"
 )
 
-var server = saevenx.CreateServer()
-
 func main() {
 	service := ":7777"
 
@@ -19,10 +17,8 @@ func main() {
 	checkError(err)
 	defer listener.Close()
 
-	server.Start()
+	saevenx.GetServer().Start()
 	listenForConnections(listener)
-
-
 }
 
 func listenForConnections(listener *net.TCPListener) {
@@ -43,7 +39,5 @@ func checkError(err error) {
 }
 
 func newDescriptor(connection net.Conn) {
-	server.AddConnection( connection )
+	saevenx.ServerInstance.AddConnection(connection)
 }
-
-
