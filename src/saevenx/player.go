@@ -6,6 +6,7 @@ type Player struct {
 	Name        string
 	CurrentRoom int
 	connection  *Connection
+	inventory   []*Item
 }
 
 func (player *Player) setConnection(connection *Connection) {
@@ -17,10 +18,9 @@ func (player *Player) getCurrentRoom() int {
 }
 
 func (player *Player) do(verb string, arguments []string) {
-
-	command, error := getCommand(verb)
-	if error != nil {
-		player.connection.Write(fmt.Sprint(error))
+	command, err := getCommand(verb)
+	if err != nil {
+		player.connection.Write(fmt.Sprint(err))
 		return
 	}
 

@@ -5,6 +5,7 @@ type Room struct {
 	title       string
 	description string
 	exits       map[string]*Room
+	Inventory   []*Item
 }
 
 /**
@@ -28,14 +29,28 @@ func loadRooms() map[int]*Room {
 {L   A large, {nstr{congl{n{Cy cle{n{cft cir{ncle{L lay before what seems to be the entrance to{n
 {Lthe edifice, and through the low resonant wing; one could swear that is it{n
 {Lactually humming.{n`),
+		Inventory: []*Item{
+			{
+				Keys:             []string{"moss", "laden", "skull"},
+				Name:             Colorize("{WA {Gmoss-{gladen {wskull"),
+				ShortDescription: "a moss-laden skull peeks out from under some leaves",
+				Description:      "upon closer inspection...",
+			},
+		},
 	}
 
 	return rooms
 }
 
 func (room *Room) showTo(player *Player) {
+	str := room.title + "\n\n" + room.description + room.listContents()
+	player.connection.Write(str)
+}
 
-	player.connection.Write(room.title + "\n\n")
-	player.connection.Write(room.description)
-
+func (room *Room) listContents() string {
+	str := "\n"
+	for _, item := range room.Inventory {
+		str += item.ShortDescription + "\n"
+	}
+	return str
 }

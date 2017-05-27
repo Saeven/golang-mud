@@ -51,8 +51,21 @@ var commandList = map[string]*Command{
 	 */
 	"look": {
 		closure: func(player *Player, arguments []string) {
-			ServerInstance.getRoom(player.CurrentRoom).showTo(player)
-			player.connection.Write("\n")
+			currentRoom := ServerInstance.getRoom(player.CurrentRoom)
+
+			if len(arguments) == 0 {
+				currentRoom.showTo(player)
+				player.connection.Write("\n")
+			} else {
+				// find something or someone in the room that matches the keyword
+				for _, item := range currentRoom.Inventory {
+					if containsString(item.Keys, arguments[0]) {
+						player.connection.Write(item.Description)
+						return
+					}
+				}
+			}
+
 		},
 		executionTimeInSeconds: 0,
 	},

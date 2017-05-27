@@ -109,7 +109,13 @@ func userExists(username string) bool {
  */
 func authenticate(username string, password string) *Player {
 	if username == "Saeven" && password == "123" {
-		return &Player{Name: username, CurrentRoom: 1}
+		player := &Player{Name: username, CurrentRoom: 1}
+		player.inventory = []*Item{
+			{Name: "A Dark Sword", Description:"A test object to test object loading"},
+		}
+
+		return player
+
 	}
 	return nil
 }
@@ -153,6 +159,9 @@ func (server *Server) ConnectionCount() int {
  */
 func (server *Server) onMessageReceived(connection *Connection, message string) {
 
+	if len(message) == 0 {
+		return
+	}
 	words := strings.Fields(message)
 	input, arguments := words[0], words[1:]
 
