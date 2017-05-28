@@ -160,12 +160,14 @@ func (server *Server) ConnectionCount() int {
 func (server *Server) onMessageReceived(connection *Connection, message string) {
 
 	if len(message) == 0 {
+		connection.Player.sendPrompt()
 		return
 	}
 	words := strings.Fields(message)
 	input, arguments := words[0], words[1:]
 
 	connection.Player.do(input, arguments)
+	connection.Player.sendPrompt()
 }
 
 func (server *Server) getRoom(roomId int) *Room {

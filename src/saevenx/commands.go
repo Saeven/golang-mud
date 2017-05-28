@@ -70,4 +70,36 @@ var commandList = map[string]*Command{
 		executionTimeInSeconds: 0,
 	},
 
+	"sit": {
+		closure: func(player *Player, arguments []string) {
+
+			player.adjustPosition(POS_SITTING)
+
+		},
+	},
+
+	"stand": {
+		closure: func(player *Player, arguments []string) {
+
+			player.adjustPosition(POS_STANDING)
+
+		},
+	},
+
+	"kneel": {
+		closure: func(player *Player, arguments []string) {
+
+			player.adjustPosition(POS_KNEELING)
+
+		},
+	},
+
+	"rest": {
+		closure: func(player *Player, arguments []string) {
+
+			player.adjustPosition(POS_RECLINED)
+
+		},
+	},
+
 }
