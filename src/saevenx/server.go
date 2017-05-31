@@ -109,9 +109,9 @@ func userExists(username string) bool {
  */
 func authenticate(username string, password string) *Player {
 	if username == "Saeven" && password == "123" {
-		player := &Player{Name: username, CurrentRoom: 1}
+		player := &Player{Name: username, CurrentRoom: 1, hitPointsMax: 100, hitPoints: 50, vitalityMax: 250, vitality: 250, race: getRace("demon")}
 		player.inventory = []*Item{
-			{Name: "A Dark Sword", Description:"A test object to test object loading"},
+			{Name: "A Dark Sword", Description: "A test object to test object loading"},
 		}
 
 		return player
@@ -125,6 +125,7 @@ func authenticate(username string, password string) *Player {
  */
 func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	fmt.Printf("[AUTH] Player authenticated (%s)\n", connection.Player.Name)
+	server.playerList = append(server.playerList, connection)
 
 	connection.state = STATE_LOGIN_MENU
 	connection.Write("Welcome. Death Awaits.\n")
@@ -139,8 +140,11 @@ func (server *Server) Start() {
 
 	go func() {
 		for range server.ticker.C {
-			for _, c := range server.connectionList {
+			for _, c := range server.playerList {
 				fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
+				if c.Player != nil {
+					c.Player.pulseUpdate()
+				}
 			}
 		}
 	}()

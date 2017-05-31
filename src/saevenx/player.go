@@ -1,6 +1,8 @@
 package saevenx
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const (
 	POS_PRONE    = 4
@@ -15,6 +17,7 @@ type Player struct {
 	CurrentRoom  int
 	connection   *Connection
 	inventory    []*Item
+	race         *Race
 	position     int
 	hitPoints    int
 	hitPointsMax int
@@ -30,6 +33,9 @@ func (player *Player) getCurrentRoom() int {
 	return player.CurrentRoom
 }
 
+/**
+ * Execute a command on behalf of this player
+ */
 func (player *Player) do(verb string, arguments []string) {
 	command, err := getCommand(verb)
 	if err != nil {
@@ -132,4 +138,16 @@ func getPositionString(position int) string {
 		return FG_CYAN + "standing" + MOD_CLEAR
 	}
 	return "Unknown"
+}
+
+func (player *Player) pulseUpdate() {
+	fmt.Printf("This is for player %s", player.Name)
+	if player.hitPoints < player.hitPointsMax {
+		player.hitPoints = min(player.hitPoints+player.regenHP(), player.hitPointsMax)
+		player.sendPrompt()
+	}
+}
+
+func (player *Player) regenHP() int {
+	return random_int(0, player.race.hitpointRegen)
 }
