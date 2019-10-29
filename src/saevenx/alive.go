@@ -1,6 +1,6 @@
 package saevenx
 
-type Alive interface{
+type Alive interface {
 	getHitpoints() int
 	getVitality() int
 }

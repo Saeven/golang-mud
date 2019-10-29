@@ -17,7 +17,6 @@ var raceList = map[string]*Race{
 		Faction:       "Hell",
 		hitpointRegen: 10,
 		vitalityRegen: 5,
-
 	},
 }
 
@@ -25,6 +24,6 @@ func getRace(raceName string) *Race {
 	if val, ok := raceList[raceName]; ok {
 		return val
 	}
-	log.Fatal( "A non-existant race key was requested")
+	log.Fatal("A non-existant race key was requested")
 	return nil
 }

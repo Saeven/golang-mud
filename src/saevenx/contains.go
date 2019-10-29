@@ -1,6 +1,6 @@
 package saevenx
 
-type Contains interface{
+type Contains interface {
 	getItems() []*Item
 	hasSpace() int
 	listContents() string

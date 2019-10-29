@@ -1,9 +1,9 @@
 package saevenx
 
 import (
+	"errors"
 	"sort"
 	"strings"
-	"errors"
 )
 
 /**
@@ -101,5 +101,4 @@ var commandList = map[string]*Command{
 
 		},
 	},
-
 }

@@ -1,12 +1,12 @@
 package saevenx
 
 import (
-	"net"
-	"time"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"os"
 	"strings"
+	"time"
 )
 
 type Server struct {
