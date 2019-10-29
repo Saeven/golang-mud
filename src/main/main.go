@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"saevenx"
+
+	mudcore "github.com/Saeven/golang-mud/src/saevenx"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	checkError(err)
 	defer listener.Close()
 
-	saevenx.GetServer().Start()
+	mudcore.GetServer().Start()
 	listenForConnections(listener)
 }
 
@@ -39,5 +40,5 @@ func checkError(err error) {
 }
 
 func newDescriptor(connection net.Conn) {
-	saevenx.ServerInstance.AddConnection(connection)
+	mudcore.ServerInstance.AddConnection(connection)
 }
