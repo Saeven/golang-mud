@@ -1,8 +1,8 @@
 package saevenx
 
 import (
-	"time"
 	"math/rand"
+	"time"
 )
 
 /**
@@ -18,7 +18,6 @@ func containsString(s []string, e string) bool {
 	return false
 }
 
-
 func min(x, y int) int {
 	if x < y {
 		return x
@@ -28,5 +27,5 @@ func min(x, y int) int {
 
 func random_int(min, max int) int {
 	rand.Seed(time.Now().Unix())
-	return rand.Intn(max - min) + min
+	return rand.Intn(max-min) + min
 }

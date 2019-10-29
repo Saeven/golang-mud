@@ -13,7 +13,7 @@ type Room struct {
  * @TODO Actually load them from database...
  */
 func loadRooms() map[int]*Room {
-	rooms := make(map[int]*Room, 5);
+	rooms := make(map[int]*Room, 5)
 	rooms[1] = &Room{
 		id:    1,
 		title: Colorize("{LThe center of the world"),

@@ -1,10 +1,10 @@
 package saevenx
 
 import (
-	"net"
-	"time"
 	"bufio"
+	"net"
 	"strings"
+	"time"
 )
 
 /**
@@ -76,7 +76,7 @@ func (connection *Connection) listen() {
 
 			// Player is being asked to authenticate
 		case STATE_LOGIN_PASSWORD:
-			exists, player := ServerInstance.login(connection.username, message);
+			exists, player := ServerInstance.login(connection.username, message)
 
 			if exists {
 				if player != nil {
