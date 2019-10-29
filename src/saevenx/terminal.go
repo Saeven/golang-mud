@@ -7,42 +7,42 @@ import (
 /*
  * Saeven COLOR CODES and VT SEQUENCES
  */
-const MOD_CLEAR = "[0m" /* Resets Color (n) */
-const MOD_BOLD = "[1m"
-const MOD_FAINT = "[2m"
-const MOD_UNDERLINE = "[4m"
-const MOD_BLINK = "[5m"
-const MOD_REVERSE = "[7m"
+const MOD_CLEAR = "\x1b[0m" /* Resets Color (n) */
+const MOD_BOLD = "\x1b[1m"
+const MOD_FAINT = "\x1b[2m"
+const MOD_UNDERLINE = "\x1b[4m"
+const MOD_BLINK = "\x1b[5m"
+const MOD_REVERSE = "\x1b[7m"
 
 // Foreground Colors
-const FG_BLACK = "[0;30m"   /* (l) */
-const FG_RED = "[0;31m"     /* (r) */
-const FG_GREEN = "[0;32m"   /* (g) */
-const FG_YELLOW = "[0;33m"  /* (y) */
-const FG_BLUE = "[0;34m"    /* (b) */
-const FG_MAGENTA = "[0;35m" /* (m) */
-const FG_CYAN = "[0;36m"    /* (c) */
-const FG_WHITE = "[0;37m"   /* (w) */
+const FG_BLACK = "\x1b[0;30m"   /* (l) */
+const FG_RED = "\x1b[0;31m"     /* (r) */
+const FG_GREEN = "\x1b[0;32m"   /* (g) */
+const FG_YELLOW = "\x1b[0;33m"  /* (y) */
+const FG_BLUE = "\x1b[0;34m"    /* (b) */
+const FG_MAGENTA = "\x1b[0;35m" /* (m) */
+const FG_CYAN = "\x1b[0;36m"    /* (c) */
+const FG_WHITE = "\x1b[0;37m"   /* (w) */
 
 // Bold Foreground Colors
-const FG_B_BLACK = "[1;30m"   /* (L) */
-const FG_B_RED = "[1;31m"     /* (R) */
-const FG_B_GREEN = "[1;32m"   /* (G) */
-const FG_B_YELLOW = "[1;33m"  /* (Y) */
-const FG_B_BLUE = "[1;34m"    /* (B) */
-const FG_B_MAGENTA = "[1;35m" /* (M) */
-const FG_B_CYAN = "[1;36m"    /* (C) */
-const FG_B_WHITE = "[1;37m"   /* (W) */
+const FG_B_BLACK = "\x1b[1;30m"   /* (L) */
+const FG_B_RED = "\x1b[1;31m"     /* (R) */
+const FG_B_GREEN = "\x1b[1;32m"   /* (G) */
+const FG_B_YELLOW = "\x1b[1;33m"  /* (Y) */
+const FG_B_BLUE = "\x1b[1;34m"    /* (B) */
+const FG_B_MAGENTA = "\x1b[1;35m" /* (M) */
+const FG_B_CYAN = "\x1b[1;36m"    /* (C) */
+const FG_B_WHITE = "\x1b[1;37m"   /* (W) */
 
 // Background Colors
-const BG_BLACK = "[40m"
-const BG_RED = "[41m"
-const BG_GREEN = "[42m"
-const BG_YELLOW = "[43m"
-const BG_BLUE = "[44m"
-const BG_MAGENTA = "[45m"
-const BG_CYAN = "[46m"
-const BG_WHITE = "[47m"
+const BG_BLACK = "\x1b[40m"
+const BG_RED = "\x1b[41m"
+const BG_GREEN = "\x1b[42m"
+const BG_YELLOW = "\x1b[43m"
+const BG_BLUE = "\x1b[44m"
+const BG_MAGENTA = "\x1b[45m"
+const BG_CYAN = "\x1b[46m"
+const BG_WHITE = "\x1b[47m"
 
 const VT_SAVE_CURSOR = "\x1b7"    // Save cursor and attributes
 const VT_REST_CURSOR = "\x1b8"    // Restore cursor and attributes
