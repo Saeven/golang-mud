@@ -12,19 +12,41 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootContext context.Context
+var (
+	rootContext context.Context
+	appVersion  string
+)
+
+const (
+	defaultVersion = "0.0.0-dev"
+)
 
 func main() {
+	if appVersion == "" {
+		appVersion = defaultVersion
+	}
+
 	rand.Seed(time.Now().Unix())
 
 	rootContext = context.Background()
 	rootCmd.Execute()
 }
 
+func init() {
+	rootCmd.AddCommand(runCmd)
+	rootCmd.AddCommand(versionCmd)
+}
+
 var rootCmd = &cobra.Command{
 	Use:   "golang-mud",
 	Short: "",
 	Long:  "",
+}
+
+var runCmd = &cobra.Command{
+	Use:   "run",
+	Short: "run the mud server",
+	Long:  "run the mud server",
 	Run: func(cmd *cobra.Command, args []string) {
 		service := ":7777"
 
@@ -37,6 +59,15 @@ var rootCmd = &cobra.Command{
 
 		mudcore.GetServer().Start()
 		listenForConnections(listener)
+	},
+}
+
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "show version information",
+	Long:  "show version information",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("golang-mud v%s\n", appVersion)
 	},
 }
 
