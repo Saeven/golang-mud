@@ -1,3 +1,5 @@
+VERSION_FILE=VERSION
+
 SRC_PKGS=$(shell go list ./... | grep -v vendor)
 
 ifeq ($(strip $(NO_REV)),)
@@ -5,7 +7,7 @@ ifeq ($(strip $(NO_REV)),)
 endif
 
 ifeq ($(BUILD_VERSION),)
-	VERSION="1.0.0"
+	VERSION=$(shell cat $(VERSION_FILE))
 	BUILD_VERSION_NO_REV=$(VERSION)
 	ifeq ($(strip $(REV)),)
 		BUILD_VERSION=$(VERSION)
