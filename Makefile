@@ -14,7 +14,12 @@ ifeq ($(BUILD_VERSION),)
 	endif
 endif
 
-.PHONY: clean test
+IMAGE_REPO=golang-mud
+ifeq ($(IMAGE_NAME),)
+	IMAGE_NAME=$(IMAGE_REPO):$(BUILD_VERSION_NO_REV)
+endif
+
+.PHONY: clean image test
 
 all: compile
 
@@ -27,6 +32,9 @@ compile:
 
 dist:
 	CGO_ENABLED=0 go build -ldflags "-X main.appVersion=$(BUILD_VERSION)" -o dist/golang-mud
+
+image:
+	docker build -t $(IMAGE_NAME) -t $(IMAGE_REPO):latest .
 
 test:
 	set -e;
