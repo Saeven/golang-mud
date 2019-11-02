@@ -15,10 +15,12 @@ import (
 var (
 	rootContext context.Context
 	appVersion  string
+	appName     string
 )
 
 const (
 	defaultVersion = "0.0.0-dev"
+	defaultAppName = "golang-mud"
 )
 
 func main() {
@@ -38,7 +40,7 @@ func init() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "golang-mud",
+	Use:   appName,
 	Short: "",
 	Long:  "",
 }
@@ -67,7 +69,7 @@ var versionCmd = &cobra.Command{
 	Short: "show version information",
 	Long:  "show version information",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("golang-mud v%s\n", appVersion)
+		fmt.Printf("%s v%s\n", appName, appVersion)
 	},
 }
 
